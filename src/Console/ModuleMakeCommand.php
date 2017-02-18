@@ -54,7 +54,7 @@ class ModuleMakeCommand extends GeneratorCommand {
 		$this->version = (int) str_replace('.', '', $app->version());
 
 		// check if module exists
-		if($this->files->exists(app_path().'/Modules/'.$this->getNameInput())) 
+		if($this->files->exists(app_path().'/Modules/'.$this->getNameInput()))
 			return $this->error($this->type.' already exists!');
 
 		// Create Controller
@@ -79,11 +79,11 @@ class ModuleMakeCommand extends GeneratorCommand {
 
 			// Create WEB Routes file
 			$this->generate('web');
-			
+
 			// Create API Routes file
 			$this->generate('api');
 		}
-		
+
 		// Create Helper file
 		$this->generate('helper');
 
@@ -91,7 +91,7 @@ class ModuleMakeCommand extends GeneratorCommand {
 
 		if ( ! $this->option('no-migration')) {
 
-			// without hacky studly_case function 
+			// without hacky studly_case function
 			// foo-bar results in foo-bar and not in foo_bar
 			$table = str_plural(snake_case(studly_case($this->getNameInput())));
 			$this->call('make:migration', ['name' => "create_{$table}_table", '--create' => $table]);
@@ -101,7 +101,7 @@ class ModuleMakeCommand extends GeneratorCommand {
 	}
 
 
-	protected function generate($type) 
+	protected function generate($type)
 	{
 		switch ($type) {
 			case 'controller':
@@ -115,11 +115,11 @@ class ModuleMakeCommand extends GeneratorCommand {
 			case 'view':
 				$filename = 'index.blade';
 				break;
-				
+
 			case 'translation':
 				$filename = 'example';
 				break;
-			
+
 			case 'routes':
 				$filename = 'routes';
 				break;
@@ -133,13 +133,13 @@ class ModuleMakeCommand extends GeneratorCommand {
 				$filename = 'api';
 				$folder = 'routes\\';
 				break;
-				
+
 			case 'helper':
 				$filename = 'helper';
 				break;
 		}
 
-		if( ! isset($folder)) 
+		if( ! isset($folder))
 			$folder = ($type != 'routes' && $type != 'helper') ? ucfirst($type).'s\\'. ($type === 'translation' ? 'en\\':'') : '';
 
 		$qualifyClass = method_exists($this, 'qualifyClass') ? 'qualifyClass' : 'parseName';
